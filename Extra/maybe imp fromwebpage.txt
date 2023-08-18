@@ -1,0 +1,36 @@
+LOGIN
+CHE KOUT
+GALLERY SHIFT TO HOME
+
+
+home: navabar(curretc + about us)
+	desc company (2 head lines as select tile, design for u)
+	gtiles imh=g 
+	below in h3 
+	para desc 2 lin
+	comtyavt us, phone mail logo,
+
+
+buy page of each with billing on extended page..... 
+ 
+
+
+billinh [page:
+amount 
+plavce order
+payment : cod only 
+thank you for visiting 
+contact us for order details 
+continue shopping
+
+
+tilesbazaar1101
+
+
+
+
+
+
+
+	
+
