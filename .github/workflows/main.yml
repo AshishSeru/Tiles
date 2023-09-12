@@ -1,36 +1,38 @@
-name: Docker Build and Test
+name: Publish Docker image
 
 on:
   push:
-    branches:
-      - master  # Change this to your main branch name
+    branches: ['main']
 
 jobs:
-  build:
+  build_and_deploy:
+    name: Build and Deploy
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Check out the repo
+        uses: actions/checkout@v3
 
-    - name: Log in to Docker Hub
-      uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
-      with: 
-          username: gamanayr
-          password: "#GaMa0230"
-
-                              
-    - name: Build Docker image
-      run: docker build -t gamanayr/website_4th_sem_1-php-env .
-
-    - name: Run Docker Compose
-      run: docker-compose up --build -d
-
-    - name: Wait for services to start
-      run: sleep 10  # Adjust the wait time as needed
+      - name: Install Composer
+        run: |
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php composer-setup.php
+          php -r "unlink('composer-setup.php');"
+          mv composer.phar /usr/local/bin/composer
       
-    - name: Push Docker Image
-      run: docker push gamanayr/website_4th_sem_1-php-env:latest
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          username: ashishseru
+          password: "$saibaba171202"
+      
+      - name: Build Docker Image
+        run: docker build -t devops .
+        
+      - name: Tag Docker Image
+        run: docker tag devops:latest ashishseru/devops:latest
+      
+      - name: Push Docker Image
+        run: docker push ashishseru/devops:latest
 
-    - name: Stop Docker Compose
-      run: docker-compose down
+      - name: Run Docker Container
+        run: docker run -d -p 80:80 ashishseru/devops:latest
